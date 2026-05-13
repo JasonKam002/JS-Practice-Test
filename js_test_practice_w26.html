@@ -462,6 +462,9 @@
       <br />
       Password: <input type="text" id="pwBox" /> <br /><br />
       <!-- Add your Check and Reset buttons here -->
+      <button class="check" onclick="check()">Check</button>
+      <button class="reset" onclick="reset()">Reset</button>
+      <br />
       <br />
       <div
         id="Q4strength"
@@ -479,6 +482,30 @@
 
       <script>
         // WRITE YOUR JAVASCRIPT FOR QUESTION 4 HERE
+
+        function check() {
+          let password = String(document.querySelector("#pwBox").value)
+          let box = document.querySelector("#Q4strength")
+
+          if (password.length < 6) {
+            box.style.backgroundColor = "red"
+            box.textContent = "Weak"
+          } else if (password.length >= 10) {
+            box.style.backgroundColor = "green"
+            box.textContent = "Strong"
+          } else {
+            box.style.backgroundColor = "orange"
+            box.textContent = "Medium"
+          }
+        }
+
+        function reset() {
+          let box = document.querySelector("#Q4strength")
+
+          box.style.backgroundColor = "white"
+          box.textContent = null
+        }
+        
       </script>
     </div>
 
@@ -548,6 +575,7 @@
       <h2>Question 5</h2>
       <br />
       <!-- Add your Build List and Clear buttons here -->
+      <button class="build" onclick="q5()">Build</button>; <button class="clear" onclick="q5clear()">Clear</button>
       <br /><br />
       <div
         id="Q5output"
@@ -563,6 +591,32 @@
 
       <script>
         // WRITE YOUR JAVASCRIPT FOR QUESTION 5 HERE
+        let list = []
+        let q5text = ""
+        let q5total = 0
+
+        function q5() {
+          for (let i = 0; i < 5; i++) {
+            list.push(Number(prompt("Enter a number")))
+          }
+
+          for (const i of list) {
+            q5text += i + "<br>"
+            q5total += i
+          }
+
+          q5text += q5total + "<br>"
+          q5text += q5total/list.length
+
+          document.querySelector("#Q5output").innerHTML = q5text
+
+          list.length = 0
+          q5text = ""
+        }
+
+        function q5clear() {
+          document.querySelector("#Q5output").innerHTML = null
+        }
       </script>
     </div>
 
@@ -646,6 +700,8 @@
       <h2>Question 6</h2>
       <br />
       <!-- Add your Toggle button here -->
+      <button class="toggle" onclick="toggle()">Toggle</button>
+      <button onclick="changeColor()">Change color</button>
       &nbsp;
       <!-- Add your Change Colour button here -->
       <br /><br />
@@ -665,7 +721,33 @@
       <br />
 
       <script>
+        let state = "hidden"
+        let div = document.querySelector("#Q6panel")
+        let q6list = ["lightblue", "lightyellow", "lightgreen"]
+        let i = 0
+        let button = document.querySelector(".toggle")
+
         // WRITE YOUR JAVASCRIPT FOR QUESTION 6 HERE
+        function toggle() {
+          if (state == "hidden") {
+            div.style.display = "block"
+            state = "visible"
+            button.textContent = "Hide info"
+          } else if (state == "visible") {
+            div.style.display = "none"
+            state = "hidden"
+            button.textContent = "Show info"
+          }     
+        }
+
+        function changeColor() {
+          div.style.backgroundColor = q6list[i]
+          i += 1
+
+          if (i > 2) {
+            i = 0
+          }
+        }
       </script>
     </div>
 
@@ -742,14 +824,58 @@
       <h2>Question 7</h2>
       <br />
       <!-- Add your Add Listener, Remove Listener, and Reset buttons here -->
+      <button class="add" onclick="add('.clickbox')">Add listener</button>; <button class="remove" onclick="remove('.clickbox')">Remove listener</button>; <button class="reset" onclick="reset('.clickbox')">Reset</button>
       <br /><br />
       <!-- Add your clickable box (Q7box) here -->
+      <button class="clickbox">Click me</button>
+      <br />
       <br />
       <!-- Add your result div (Q7result) here -->
+      <div style="
+      display: block; 
+      background-color: #d4d4d4; 
+      width: 200px; 
+      height: 50px; 
+      border: solid black; 
+      padding: 20px; 
+      font-size: 50px; 
+      text-align: center;"
+      class="box">
+        
+      </div>
       <br />
 
       <script>
         // WRITE YOUR JAVASCRIPT FOR QUESTION 7 HERE
+        let count = 0
+        let text = document.querySelector(".box")
+        let q7list = ["lightblue", "red", "lightgreen"]
+        q7i = 0
+
+        function click() {
+          count += 1
+          text.innerHTML = count
+          text.style.backgroundColor = q7list[q7i]
+          q7i += 1
+
+          if (q7i > 2) {
+            q7i = 0
+          }
+        }
+
+        function add(i) {
+          document.querySelector(i).addEventListener("click", click)
+        }
+
+        function remove(i) {
+          document.querySelector(i).removeEventListener("click", click)
+        }
+
+        function reset(i) {
+          count = 0
+          text.innerHTML = count
+          document.querySelector(i).addEventListener("click", click)
+        }
       </script>
     </div>
   </body>
