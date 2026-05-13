@@ -135,16 +135,33 @@
       Bill Amount ($): <input type="text" id="billBox" /> <br /><br />
       Tip Percentage (%): <input type="text" id="tipPctBox" /> <br /><br />
       <!-- Add your button here -->
+      <button type="button" class="calculate">Calculate</button>
       <br /><br />
       Tip Amount:
       <!-- Add your result box here -->
+      <input class="tip" readonly></input>
       <br /><br />
       Total Bill:
       <!-- Add your result box here -->
+       <input class="total" readonly></input>
       <br /><br />
 
       <script>
         // WRITE YOUR JAVASCRIPT FOR QUESTION 1 HERE
+        let calculate = document.querySelector(".calculate")
+
+        calculate.addEventListener("click", calculation)
+
+        function calculation() {
+          let bill = Number(document.querySelector("#billBox").value)
+          let tipPct = Number(document.querySelector("#tipPctBox").value/100)
+
+          let tip = bill * tipPct
+          let total = bill + tip
+
+          document.querySelector(".tip").value = tip
+          document.querySelector(".total").value = total
+        }
       </script>
     </div>
 
@@ -213,8 +230,11 @@
       <br />
       Temperature: <input type="text" id="tempBox" /> <br /><br />
       <!-- Add your radio buttons here -->
+      <input type="radio" name="conversion" value="CtoF">C to F</input>
+      <input type="radio" name="conversion" value="FtoC">F to C</input>
       <br /><br />
       <!-- Add your Convert button here -->
+      <button type="button" class="convert">Convert</button>
       <br /><br />
       Result:
       <br />
@@ -234,6 +254,36 @@
 
       <script>
         // WRITE YOUR JAVASCRIPT FOR QUESTION 2 HERE
+        document.querySelector(".convert").addEventListener("click", convert)
+
+        function convert() {
+          let temp = Number(document.querySelector("#tempBox").value)
+          let conversion = document.querySelector("input[name='conversion']:checked")
+          let result = document.querySelector("#Q2result")
+          let final
+
+          if (conversion.value == "CtoF") {
+            final = temp * 9/5 + 32
+            if (final < 32) {
+              result.style.backgroundColor = "blue"
+            } else if (final > 212) {
+              result.style.backgroundColor = "red"
+            } else {
+              result.style.backgroundColor = "white"
+            }
+            result.textContent = final
+          } else {
+            final = (temp - 32) * 5/9
+            if (final < 0) {
+              result.style.backgroundColor = "blue"
+            } else if (final > 100) {
+              result.style.backgroundColor = "red"
+            } else {
+              result.style.backgroundColor = "white"
+            }
+            result.textContent = final
+          }
+        }
       </script>
     </div>
 
@@ -302,6 +352,8 @@
       <br />
       Enter a number: <input type="text" id="tableNumBox" /> <br /><br />
       <!-- Add your Generate and Clear buttons here -->
+       <button class="generate" onclick="display()">generate</button>
+       <button class="reset" onclick="document.querySelector('#Q3output').innerHTML = null">reset</button>
       <br />
       <div
         id="Q3output"
@@ -317,6 +369,17 @@
 
       <script>
         // WRITE YOUR JAVASCRIPT FOR QUESTION 3 HERE
+        function display() {
+          let input = Number(document.querySelector("#tableNumBox").value)
+          let text = ""
+          for (let i = 1; i < 13; i++) {
+            text += input + ' x ' + i + ' = ' + (input*i) + "<br>"
+          }
+
+          document.querySelector("#Q3output").innerHTML = text
+        }
+
+
       </script>
     </div>
 
